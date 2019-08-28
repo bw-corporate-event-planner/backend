@@ -45,6 +45,7 @@ router.post('/login', (request, response) => {
     Users.findUser({ username })
     .first()
     .then(user => {
+      console.log('.then user log', user)
       if (user && bcrypt.compareSync(password, user.password)) {
         request.session.username = user.username // adding username to the session cookie
         request.session.loggedIn = true // Set info as logged in to true
