@@ -12,7 +12,7 @@ module.exports = {
 
 function findLists() {
   return db('lists as l')
-    .join('vendors as v', 'vendor_id', '=', 'id')
+    .join('vendors as v', 'l.item_vendor', 'v.id')
     .select('l.id', 'l.event_id', 'l.item_name', 'l.item_cost', 'l.item_complete', 'v.vendor_name')
 }
 

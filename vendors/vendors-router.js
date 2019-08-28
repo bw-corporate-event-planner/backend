@@ -1,9 +1,10 @@
-const expres = require('express')
+const express = require('express')
 
 const router = express.Router()
 const Vendors = require('./vendors-model.js')
 
 router.get('/', (request, response) => {
+  console.log('hit the get')
   Vendors.findVendors()
     .then(vendors => {
       response.json(vendors)
