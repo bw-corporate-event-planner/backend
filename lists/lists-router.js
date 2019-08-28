@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 const Lists = require('./lists-model.js')
+const Vendors = require('../vendors/vendors-model.js')
 
 router.get('/', (request, response) => {
   Lists.findLists()
@@ -16,7 +17,8 @@ router.get('/', (request, response) => {
 
 router.post('/', (request, response) => {
   const newItem = request.body
-
+  console.log(newItem)
+  
   Lists.createList()
     .then(list => {
       response.status(201).json(list)

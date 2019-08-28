@@ -1,3 +1,4 @@
+console.log(process.env.POSTGRES_PASSWORD)
 module.exports = {
   production: {
     client: 'pg',

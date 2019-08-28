@@ -1,7 +1,8 @@
 const knex = require('knex')
 const knexConfig = require('../knexfile.js')
+const environment = process.env.DB_ENV || 'development';
 
-const db = knex(knexConfig.development)
+const db = knex(knexConfig[environment])
 
 module.exports = {
   findEvents,
@@ -42,12 +43,8 @@ function findEvents() {
 
 function findEventsID(id) {
   return Promise.all
-  ([db('events')
-      .where({id})
-      .first(), 
-    db('lists')
-      .where({eventid: id})
-      .join('vendors')],
+  ([db('events').where({id}).first(), 
+    db('lists').where({eventid: id}).join('vendors')],
     ([event, items]) => {
       return {...event, items: items};
     });
