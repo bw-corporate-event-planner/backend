@@ -23,6 +23,8 @@ router.post('/register', (request, response) => {
 
 router.post('/login', (request, response) => {
   let { username, password } = request.body
+  console.log(request.body)
+  console.log(username)
 
   if (username && password) {
     Users.findUser({ username })
