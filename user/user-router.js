@@ -11,15 +11,31 @@ router.post('/register', (request, response) => {
   let newUser = request.body
   const hash = bcrypt.hashSync(newUser.password)
   newUser.password = hash
+  console.log(newUser)
 
-  Users.create(newUser)
-    .then(created => {
-      response.status(201).json(created)
-    })
-    .catch(error => {
-      console.log(error)
-      response.status(500).json(error)
-    })
+  // if (newUser.role_id) {
+  //   Roles.findRole(1)
+  //     .then(role => {
+  //       newUser.role_id = role
+  //       console.log('newUser in Roles.findrole', newUser)
+  //       response.status(200).json(role)
+        Users.create(newUser)
+          .then(created => {
+            response.status(201).json(created)
+          })
+          .catch(error => {
+            console.log(error)
+            response.status(500).json(error)
+          })
+      // })
+      // .catch(error =>{
+      //   console.log(error)
+      //   response.status(500).json(error)
+      // })
+  // } else {
+  //   response.status(404).json({ message: 'This role does not exist' })
+  // }
+
 })
 
 
