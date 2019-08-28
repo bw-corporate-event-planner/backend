@@ -24,7 +24,7 @@ function findListID(id) {
 
 function createList(newList) {
   return db('lists')
-    .insert(newList, 'id')
+    .insert(newList)
     .then(ids => {
       const [id] = ids;
       return findListID(id)

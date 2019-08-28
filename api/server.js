@@ -48,10 +48,10 @@ server.use(cors())
 server.use(session(sessionOptions))
 
 server.use('/api', UserRoutes)
-server.use('/api/roles', restricted, RolesRoutes)
-server.use('/api/events', restricted, EventsRoutes)
-server.use('/api/vendors', restricted, VendorsRoutes)
-server.use('/api/lists', restricted, ListsRoutes)
+server.use('/api/roles', RolesRoutes)
+server.use('/api/events',  EventsRoutes)
+server.use('/api/vendors', VendorsRoutes)
+server.use('/api/lists', ListsRoutes)
 
 server.get('/', (request, response) => {
   response.json({ api: 'up', session: request.session })
