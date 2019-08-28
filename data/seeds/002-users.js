@@ -1,6 +1,5 @@
 const bcyrpt = require('bcryptjs')
 
-
 exports.seed = function(knex) {
   // Deletes ALL existing entries
   return knex('users').del()

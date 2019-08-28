@@ -16,4 +16,5 @@ function find() {
 function findRole(filter) {
   return db('roles')
     .where(filter)
+    .select('id')
 }
