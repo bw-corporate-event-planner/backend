@@ -42,6 +42,7 @@ function findEvents() {
 // }
 
 function findEventsID(id) {
+  console.log(id)
   return Promise.all
   ([db('events').where({id}).first(), 
     db('lists').where({eventid: id}).join('vendors')],
