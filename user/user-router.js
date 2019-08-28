@@ -17,12 +17,14 @@ router.post('/register', (request, response) => {
     })
     .catch(error => {
       console.log(error)
-      response.status(500).response.json(error)
+      response.status(500).json(error)
     })
 })
 
 router.post('/login', (request, response) => {
   let { username, password } = request.body
+  console.log(request.body)
+  console.log(username)
 
   if (username && password) {
     Users.findUser({ username })
@@ -41,7 +43,7 @@ router.post('/login', (request, response) => {
       response.status(500).json({ message: 'Issues logging in with server' })
     })
   } else {
-    response.status(400).response.json({ message: 'Please include username and password with request' })
+    response.status(400).json({ message: 'Please include username and password with request' })
   }
 })
 
@@ -52,7 +54,7 @@ router.get('/logout', restricted, (request, response) => {
 })
 
 //// Get list of users
-router.get('/users', restricted, (request, response) => {
+router.get('/users', (request, response) => {
   Users.find()
     .then(users => {
       response.json(users)

@@ -1,3 +1,5 @@
+const bcyrpt = require('bcryptjs')
+
 
 exports.seed = function(knex) {
   // Deletes ALL existing entries
@@ -8,19 +10,19 @@ exports.seed = function(knex) {
         {
           email: 'super@super.co',
           username: 'super',
-          password: 'abcd1234',
+          password: bcyrpt.hashSync('abcd1234', 12),
           role_id: '1'
         },
         {
           email: 'manager@manager.co',
           username: 'manager',
-          password: 'abcd1234',
+          password: bcyrpt.hashSync('abcd1234', 12),
           role_id: '2'
         },
         {
           email: 'user@user.co',
           username: 'user',
-          password: 'abcd1234',
+          password: bcyrpt.hashSync('abcd1234', 12),
           role_id: '3'
         }
       ]);

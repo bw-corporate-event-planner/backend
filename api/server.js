@@ -8,6 +8,7 @@ const knexConnection = require('../data/dbConfig.js')
 
 const UserRoutes = require('../user/user-router.js')
 const RolesRoutes = require('../roles/roles-router.js')
+const EventsRoutes = require('../events/events-router.js')
 
 const server = express();
 
@@ -28,6 +29,16 @@ const sessionOptions = {
   })
 }
 
+const corsOptions = {
+  origin: '*'
+}
+
+server.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 server.use(helmet())
 server.use(express.json())
 server.use(cors())
@@ -35,6 +46,7 @@ server.use(session(sessionOptions))
 
 server.use('/api', UserRoutes)
 server.use('/api/roles', RolesRoutes)
+server.use('/api/events', EventsRoutes)
 
 server.get('/', (request, response) => {
   response.json({ api: 'up', session: request.session })
