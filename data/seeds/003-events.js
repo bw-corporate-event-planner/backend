@@ -12,7 +12,7 @@ exports.seed = function(knex) {
           event_location: 'Conference Room 204',
           event_start: '2019-08-29T07:07:07.357Z',
           event_end: '2019-08-27T09:07:07.357Z',
-          event_users: ''
+          // event_users: '16'
         }
       ]);
     });
