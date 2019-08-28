@@ -7,8 +7,8 @@ module.exports = {
   findEvents,
   findEventsID,
   // findEventsUser,
-  createEvent,
-  modifyEvent,
+  createEvent
+  // modifyEvent add after other CRUD
 }
 
 function findEvents() {
