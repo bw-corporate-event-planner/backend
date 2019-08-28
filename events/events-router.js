@@ -2,6 +2,7 @@ const express = require('express')
 
 const router = express.Router()
 const Events = require('./events-model.js')
+const Vendors = require('../vendors/vendors-model.js')
 
 //// Available to all users
 router.get('/', (request, response) => {
@@ -20,7 +21,12 @@ router.get('/:id', (request, response) => {
 
   Events.findEventsID(id)
     .then(event => {
-      response.status(200).json(event)
+      if (event) {
+        console.log(event)
+        response.status(200).json(event)
+      } else {
+        response.status(404).json({ message: 'Event with this id not found' })
+      }
     })
     .catch(error => {
       console.log(error)
