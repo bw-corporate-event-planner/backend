@@ -19,6 +19,8 @@ router.post('/register', (request, response) => {
       request.session.username = newUser.username // adding username to the session cookie
       request.session.role = newUser.role_id
       request.session.loggedIn = true // Set info as logged in to true
+      console.log(request.session)
+      console.log(request.session.username)
       response.status(201).json(created)
     })
     .catch(error => {
@@ -45,6 +47,8 @@ router.post('/login', (request, response) => {
         request.session.username = user.username // adding username to the session cookie
         request.session.role = user.role_id
         request.session.loggedIn = true // Set info as logged in to true
+        console.log(request.session)
+        console.log(request.session.username)
         response.status(200).json(user)
       } else {
         response.status(401).json({ message: 'Invalid Credentials' })
@@ -62,6 +66,7 @@ router.post('/login', (request, response) => {
 router.get('/refresh', restricted, (request, response) => {
   const user = request.session.username
   console.log(user)
+  console.log(request.session)
 
   Users.getMe(user)
     .then(user => {

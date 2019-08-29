@@ -6,6 +6,9 @@ const Vendors = require('../vendors/vendors-model.js')
 
 //// Available to all users
 router.get('/', (request, response) => {
+  console.log(request.session)
+  console.log(request.session.username)
+  
   Events.findEvents()
     .then(events => {
       response.status(200).json(events)

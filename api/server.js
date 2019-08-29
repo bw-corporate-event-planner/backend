@@ -32,19 +32,20 @@ const sessionOptions = {
   })
 }
 
-const corsOptions = {
-  origin: '*'
+const corsOptions ={
+  credentials: true,
 }
 
 server.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Credentials', true)
   next();
 });
 
 server.use(helmet())
 server.use(express.json())
-server.use(cors())
+server.use(cors(corsOptions))
 server.use(session(sessionOptions))
 
 server.use('/api', UserRoutes)
