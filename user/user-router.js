@@ -15,9 +15,9 @@ router.post('/register', (request, response) => {
 
   Users.create(newUser)
     .then(created => {
-      request.session.userid = user.id
-      request.session.username = user.username // adding username to the session cookie
-      request.session.role = user.role_id
+      request.session.userid = newUser.id
+      request.session.username = newUser.username // adding username to the session cookie
+      request.session.role = newUser.role_id
       request.session.loggedIn = true // Set info as logged in to true
       response.status(201).json(created)
     })
@@ -32,13 +32,16 @@ router.post('/login', (request, response) => {
   console.log(request.body)
   console.log(username)
 
+  // const hash = bcrypt.hashSync(password)
+  // password = hash
+
   if (username && password) {
     Users.findUser({ username })
     .first()
     .then(user => {
       console.log('.then user log', user)
       if (user && bcrypt.compareSync(password, user.password)) {
-        request.session.userid = user.id
+        request.session.userID = user.id
         request.session.username = user.username // adding username to the session cookie
         request.session.role = user.role_id
         request.session.loggedIn = true // Set info as logged in to true

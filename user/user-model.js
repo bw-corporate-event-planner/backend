@@ -24,14 +24,14 @@ function create(user) {
   .then(ids => {
     const [id] = ids;
     return findUserId(id)
-      .select('id', 'username', 'role_id')
+      .select('id', 'username', 'password', 'role_id')
   })
 }
 
 function findUser(filter) {
   return db('users')
     .where(filter)
-    .select('id', 'username', 'role_id')
+    .select('id', 'username', 'password', 'role_id')
 }
 
 function find() {
