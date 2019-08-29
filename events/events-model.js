@@ -76,9 +76,5 @@ function findEventsID(id) {
 function createEvent(newEvent) {
   return db('events')
     .insert(newEvent, 'id')
-    .then(ids => {
-      const [id] = ids;
-      return findEventsID(id)
-        .select('*')
-    })
+    .returning('*')
 }

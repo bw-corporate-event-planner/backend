@@ -25,9 +25,9 @@ function findListID(id) {
 function createList(newList) {
   return db('lists')
     .insert(newList)
-    .then(ids => {
-      const [id] = ids;
-      return findListID(id)
-        .select('*')
-    })
-}
+    // .then(ids => {
+    //   // const [id] = ids;
+    //   // return findListID(id)
+    //   //   .select('*')
+    //   console.log(ids)
+    }

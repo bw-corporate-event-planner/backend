@@ -38,9 +38,9 @@ router.get('/:id', (request, response) => {
 //// Available to Admins, Managers
 // router.post
 router.post('/', (request, response) => {
-  let { event } = request.body
+  let event = request.body
 
-  console.log(event)
+  console.log('checking post event', event)
 
   Events.createEvent(event)
     .then(event => {
