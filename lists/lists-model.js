@@ -8,7 +8,8 @@ module.exports = {
   findLists,
   findListID,
   createList,
-  changeList
+  changeList,
+  deleteList
 }
 
 function findLists() {
@@ -34,4 +35,10 @@ function changeList(changes, id) {
     .where('id', '=', id)
     .update(changes)
     .returning('*')
+}
+
+function deleteList(id) {
+  return db('lists')
+    .where('id', '=', id)
+    .del()
 }

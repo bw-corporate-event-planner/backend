@@ -43,4 +43,16 @@ router.put('/:id', (request, response) => {
     })
 })
 
+router.delete('/:id', (request, response) => {
+  const id = request.params.id
+
+  Lists.deleteList(id)
+    .then(removed => {
+      response.status(200).json({ message: `List with id: ${id} has been removed` })
+    })
+    .catch(error => {
+      response.status(500).json(error)
+    })
+})
+
 module.exports = router
