@@ -46,4 +46,17 @@ router.put('/:id', (request, response) => {
     })
 })
 
+router.delete('/:id', (request, response) => {
+  let id = request.params.id
+
+  Vendors.deleteVendor(id)
+    .then(removed => {
+      response.status(200).json({ message: `Vendor with id: ${id} has been removed` })
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json(error)
+    })
+})
+
 module.exports = router

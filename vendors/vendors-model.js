@@ -8,7 +8,8 @@ module.exports = {
   findVendors,
   findVendorID,
   createVendor,
-  editVendor
+  editVendor,
+  deleteVendor
 }
 
 function findVendors() {
@@ -34,4 +35,10 @@ function editVendor(changes, id) {
     .where('id', '=', id)
     .update(changes)
     .returning('*')
+}
+
+function deleteVendor(id) {
+  return db('vendors')
+    .where('id', '=', id)
+    .del()
 }
