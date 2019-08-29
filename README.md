@@ -24,6 +24,14 @@
 ## devDependencies
 
 ### Available User Accounts
+### https://corporate-event-planr.netlify.com/
+
+| Username | Password |
+| ---- | ---- |
+| super | abcd1234 |
+| manager | abcd1234 |
+| user | abcd1234 |
+
 
 ## User Endpoints
 

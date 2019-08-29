@@ -66,6 +66,20 @@ router.post('/login', (request, response) => {
   }
 })
 
+router.get('/refresh', restricted, (request, response) => {
+  const user = request.session.username
+  console.log(user)
+
+  Users.getMe(user)
+    .then(user => {
+      response.status(418).json(user)
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json({ message: `There is no user currently logged in` })
+    })
+})
+
 router.get('/logout', restricted, (request, response) => {
   request.session.destroy(() => {
     response.status(200).json({ message: 'You have been logged out' })
@@ -74,6 +88,9 @@ router.get('/logout', restricted, (request, response) => {
 
 //// Get list of users
 router.get('/users', (request, response) => {
+  const user = request.session.username
+  console.log(user)
+
   Users.find()
     .then(users => {
       response.json(users)
