@@ -15,6 +15,19 @@ router.get('/', (request, response) => {
     })
 })
 
+router.get('/:id', (request, response) => {
+  const id = request.params.id
+
+  Lists.findListID(id)
+    .then(list => {
+      response.status(200).json(list)
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json({ message: `Issue retreiving list with id: ${id} from server.` })
+    })
+})
+
 router.post('/', (request, response) => {
   const newItem = request.body
   console.log(newItem)
