@@ -30,4 +30,17 @@ router.post('/', (request, response) => {
     })
 })
 
+router.put('/:id', (request, response) => {
+  const changes = request.body
+  const id = request.params.id
+
+  Lists.changeList(changes, id)
+    .then(update => {
+      response.status(200).json(update)
+    })
+    .catch(error => {
+      response.status(500).json({ message: 'Issues with modifying list item' })
+    })
+})
+
 module.exports = router
