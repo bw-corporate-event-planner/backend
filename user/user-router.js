@@ -15,6 +15,10 @@ router.post('/register', (request, response) => {
 
   Users.create(newUser)
     .then(created => {
+      request.session.userid = user.id
+      request.session.username = user.username // adding username to the session cookie
+      request.session.role = user.role_id
+      request.session.loggedIn = true // Set info as logged in to true
       response.status(201).json(created)
     })
     .catch(error => {
@@ -22,7 +26,6 @@ router.post('/register', (request, response) => {
       response.status(500).json(error)
     })
 })
-
 
 router.post('/login', (request, response) => {
   let { username, password } = request.body
