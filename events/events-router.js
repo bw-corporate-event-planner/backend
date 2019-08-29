@@ -67,12 +67,19 @@ router.put('/:id', (request, response) => {
     })
 })
 
-// router.delete
-// router.delete('/:id', (request, response) => {
-//   let id = request.params.id
+router.delete('/:id', (request, response) => {
+  let id = request.params.id
 
-//   Events.removeEvent(id)
-// })
+  Events.removeEvent(id)
+    .then(removed => {
+      console.log(removed)
+      response.status(200).json({ message: `Event with ${id} has been removed` })
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json(error)
+    })
+})
 
 
 module.exports = router

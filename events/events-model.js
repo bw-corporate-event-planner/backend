@@ -9,7 +9,8 @@ module.exports = {
   findEventsID,
   // findEventsUser,
   createEvent,
-  changeEvent
+  changeEvent,
+  removeEvent
 }
 
 function findEvents() {
@@ -84,4 +85,10 @@ function changeEvent(changes, id) {
     .where('id', '=', id)
     .update(changes)
     .returning('*')
+}
+
+function removeEvent(id) {
+  return db('events')
+    .where('id', '=', id)
+    .del()
 }
