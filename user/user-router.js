@@ -70,7 +70,7 @@ router.get('/refresh', restricted, (request, response) => {
 
   Users.getMe(user)
     .then(user => {
-      response.status(418).json(user)
+      response.status(200).json(user)
     })
     .catch(error => {
       console.log(error)
