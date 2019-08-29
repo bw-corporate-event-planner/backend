@@ -31,6 +31,7 @@ function create(user) {
 function findUser(filter) {
   return db('users')
     .where(filter)
+    .select('id', 'username', 'role_id')
 }
 
 function find() {
