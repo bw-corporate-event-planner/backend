@@ -18,13 +18,14 @@ router.get('/', (request, response) => {
 router.post('/', (request, response) => {
   const newItem = request.body
   console.log(newItem)
-  
-  Lists.createList()
+
+  Lists.createList(newItem)
     .then(list => {
+      console.log('testing this console.log', list)
       response.status(201).json(list)
     })
     .catch(error => {
-      console.log(error)
+      console.log('test this error', error)
       response.status(500).json({ message: 'error creating shopping item' })
     })
 })
