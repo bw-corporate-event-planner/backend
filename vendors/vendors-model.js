@@ -29,6 +29,9 @@ function createVendor(vendor) {
     .returning('*')
 }
 
-function editVendor(changes) {
+function editVendor(changes, id) {
   return db('vendors')
+    .where('id', '=', id)
+    .update(changes)
+    .returning('*')
 }

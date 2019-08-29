@@ -32,4 +32,18 @@ router.post('/', (request, response) => {
   }
 })
 
+router.put('/:id', (request, response) => {
+  let changes = request.body
+  let id = request.params.id
+
+  Vendors.editVendor(changes, id)
+    .then(updated => {
+      response.status(200).json(updated)
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json(error)
+    })
+})
+
 module.exports = router
