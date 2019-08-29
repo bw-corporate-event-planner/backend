@@ -25,10 +25,5 @@ function findVendorID(id) {
 function createVendor(vendor) {
   return db('vendors')
     .insert(vendor, 'id')
-    .then(ids => {
-      const [id] = ids
-      return findVendorID(id)
-        .first()
-        .select('*')
-    })
+    .returning('*')
 }

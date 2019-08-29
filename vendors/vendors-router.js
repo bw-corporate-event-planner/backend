@@ -16,10 +16,10 @@ router.get('/', (request, response) => {
 })
 
 router.post('/', (request, response) => {
-  let newVendor = request.body.vendor_name
+  let newVendor = request.body
 
   if (newVendor) {
-    Vendors.addVendor(newVendor)
+    Vendors.createVendor(newVendor)
       .then(created => {
         response.status(201).json(created)
       })
