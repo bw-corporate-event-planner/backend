@@ -66,7 +66,7 @@ router.post('/login', (request, response) => {
 router.get('/refresh', restricted, (request, response) => {
   const user = request.session.username
   console.log(user)
-  console.log(request.session)
+  console.log('this is request.session in refresh', request.session)
 
   Users.getMe(user)
     .then(user => {

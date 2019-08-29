@@ -22,7 +22,7 @@ const sessionOptions = {
   cookie: {
     secure: process.env.COOKIE_SECURE || false, // Should be set to true during production, false for development
     maxAge: 1000 * 60 * 60 * 24 ,  // set in milliseconds (set to 1 day)
-    httpOnly: false, // client JS has no access to the cookie
+    httpOnly: true, // client JS has no access to the cookie
   },
   resave: false,
   saveUninitialized: true,
@@ -33,14 +33,14 @@ const sessionOptions = {
   })
 }
 
-const corsOptions ={
-  credentials: true,
-}
+// const corsOptions ={
+//   credentials: true,
+// }
 
-server.use(cors(corsOptions))
+// server.use(cors(corsOptions))
 
 server.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", req.headers.origin); 
+  res.header("Access-Control-Allow-Origin", 'stupefied-poincare-4d6228.netlify.com'); //req.headers.origin 
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Set-Cookie");
   // res.setHeader('Access-Control-Allow-Headers', 'Set-Cookie')
   res.header('Access-Control-Allow-Credentials', true)
