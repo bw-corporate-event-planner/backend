@@ -52,15 +52,27 @@ router.post('/', (request, response) => {
     })
 })
 
+//// Available to added users
+router.put('/:id', (request, response) => {
+  let changes = request.body
+  let id = request.params.id
+
+  Events.changeEvent(changes, id)
+    .then(event => {
+      response.status(200).json(event)
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json(error)
+    })
+})
+
 // router.delete
 // router.delete('/:id', (request, response) => {
 //   let id = request.params.id
 
 //   Events.removeEvent(id)
 // })
-
-//// Available to added users
-// router.put
 
 
 module.exports = router

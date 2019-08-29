@@ -8,8 +8,8 @@ module.exports = {
   findEvents,
   findEventsID,
   // findEventsUser,
-  createEvent
-  // modifyEvent add after other CRUD
+  createEvent,
+  changeEvent
 }
 
 function findEvents() {
@@ -76,5 +76,12 @@ function findEventsID(id) {
 function createEvent(newEvent) {
   return db('events')
     .insert(newEvent, 'id')
+    .returning('*')
+}
+
+function changeEvent(changes, id) {
+  return db('events')
+    .where('id', '=', id)
+    .update(changes)
     .returning('*')
 }

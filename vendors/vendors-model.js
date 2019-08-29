@@ -7,7 +7,8 @@ const db = knex(knexConfig[environment])
 module.exports = {
   findVendors,
   findVendorID,
-  createVendor
+  createVendor,
+  editVendor
 }
 
 function findVendors() {
@@ -26,4 +27,8 @@ function createVendor(vendor) {
   return db('vendors')
     .insert(vendor, 'id')
     .returning('*')
+}
+
+function editVendor(changes) {
+  return db('vendors')
 }
