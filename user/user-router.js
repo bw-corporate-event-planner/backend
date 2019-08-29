@@ -13,29 +13,14 @@ router.post('/register', (request, response) => {
   newUser.password = hash
   console.log(newUser)
 
-  // if (newUser.role_id) {
-  //   Roles.findRole(1)
-  //     .then(role => {
-  //       newUser.role_id = role
-  //       console.log('newUser in Roles.findrole', newUser)
-  //       response.status(200).json(role)
-        Users.create(newUser)
-          .then(created => {
-            response.status(201).json(created)
-          })
-          .catch(error => {
-            console.log(error)
-            response.status(500).json(error)
-          })
-      // })
-      // .catch(error =>{
-      //   console.log(error)
-      //   response.status(500).json(error)
-      // })
-  // } else {
-  //   response.status(404).json({ message: 'This role does not exist' })
-  // }
-
+  Users.create(newUser)
+    .then(created => {
+      response.status(201).json(created)
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json(error)
+    })
 })
 
 
@@ -50,7 +35,9 @@ router.post('/login', (request, response) => {
     .then(user => {
       console.log('.then user log', user)
       if (user && bcrypt.compareSync(password, user.password)) {
+        request.session.userid = user.id
         request.session.username = user.username // adding username to the session cookie
+        request.session.role = user.role_id
         request.session.loggedIn = true // Set info as logged in to true
         response.status(200).json(user)
       } else {
