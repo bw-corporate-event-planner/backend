@@ -40,7 +40,7 @@ const sessionOptions = {
 // server.use(cors(corsOptions))
 
 server.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", 'stupefied-poincare-4d6228.netlify.com'); //req.headers.origin 
+  res.header("Access-Control-Allow-Origin", 'https://stupefied-poincare-4d6228.netlify.com'); //req.headers.origin 
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Set-Cookie");
   // res.setHeader('Access-Control-Allow-Headers', 'Set-Cookie')
   res.header('Access-Control-Allow-Credentials', true)
