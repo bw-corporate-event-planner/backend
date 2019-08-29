@@ -10,19 +10,19 @@ exports.seed = function(knex) {
           email: 'super@super.co',
           username: 'super',
           password: bcyrpt.hashSync('abcd1234', 12),
-          role_id: '4'
+          role_id: '1'
         },
         {
           email: 'manager@manager.co',
           username: 'manager',
           password: bcyrpt.hashSync('abcd1234', 12),
-          role_id: '5'
+          role_id: '2'
         },
         {
           email: 'user@user.co',
           username: 'user',
           password: bcyrpt.hashSync('abcd1234', 12),
-          role_id: '6'
+          role_id: '3'
         }
       ]);
     });

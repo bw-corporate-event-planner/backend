@@ -18,13 +18,14 @@ function findUserId(id) {
 }
 
 function create(user) {
+  
   return db('users')
-    .insert(user, 'id')
-    .then(ids => {
-      const [id] = ids;
-      return findUserId(id)
-        .select('id', 'username', 'role_id')
-    })
+  .insert(user, 'id')
+  .then(ids => {
+    const [id] = ids;
+    return findUserId(id)
+      .select('id', 'username', 'role_id')
+  })
 }
 
 function findUser(filter) {

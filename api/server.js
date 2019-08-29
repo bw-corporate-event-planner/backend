@@ -5,6 +5,7 @@ const session = require('express-session')
 const KnexSessionStore = require('connect-session-knex')(session)
 
 const knexConnection = require('../data/dbConfig.js')
+const restricted = require('../middleware/restricted.js')
 
 const UserRoutes = require('../user/user-router.js')
 const RolesRoutes = require('../roles/roles-router.js')
@@ -48,7 +49,7 @@ server.use(session(sessionOptions))
 
 server.use('/api', UserRoutes)
 server.use('/api/roles', RolesRoutes)
-server.use('/api/events', EventsRoutes)
+server.use('/api/events',  EventsRoutes)
 server.use('/api/vendors', VendorsRoutes)
 server.use('/api/lists', ListsRoutes)
 

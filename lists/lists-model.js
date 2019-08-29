@@ -7,7 +7,9 @@ const db = knex(knexConfig[environment])
 module.exports = {
   findLists,
   findListID,
-  createList
+  createList,
+  changeList,
+  deleteList
 }
 
 function findLists() {
@@ -25,9 +27,18 @@ function findListID(id) {
 function createList(newList) {
   return db('lists')
     .insert(newList, 'id')
-    .then(ids => {
-      const [id] = ids;
-      return findListID(id)
-        .select('*')
-    })
+    .returning('*')
+}
+
+function changeList(changes, id) {
+  return db('lists')
+    .where('id', '=', id)
+    .update(changes)
+    .returning('*')
+}
+
+function deleteList(id) {
+  return db('lists')
+    .where('id', '=', id)
+    .del()
 }

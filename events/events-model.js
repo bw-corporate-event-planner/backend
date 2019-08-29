@@ -8,8 +8,9 @@ module.exports = {
   findEvents,
   findEventsID,
   // findEventsUser,
-  createEvent
-  // modifyEvent add after other CRUD
+  createEvent,
+  changeEvent,
+  removeEvent
 }
 
 function findEvents() {
@@ -41,13 +42,29 @@ function findEvents() {
 //     });
 // }
 
+// function findEventsID(id) {
+//   console.log(id)
+//   return Promise.all
+//   ([db('events').where({id}).first(), 
+//     db('lists').where({eventid: id}).join('vendors')],
+//     ([event, items]) => {
+//       return {...event, items: items};
+//     });
+// }
+
 function findEventsID(id) {
-  return Promise.all
-  ([db('events').where({id}).first(), 
-    db('lists').where({eventid: id}).join('vendors')],
-    ([event, items]) => {
-      return {...event, items: items};
-    });
+  return db('events')
+    .where({id})
+    .first()
+    .then(event => {
+      return db('lists as l')
+        .where({ event_id: id})
+        .join('vendors as v', 'l.item_vendor', 'v.id')
+        .select('l.id', 'l.event_id', 'l.item_name', 'l.item_cost', 'l.item_complete', 'v.vendor_name')
+        .then(items => {
+          return {...event, items: items}
+        })
+    })
 }
 
 // function findEventsUser(userID) {
@@ -60,9 +77,18 @@ function findEventsID(id) {
 function createEvent(newEvent) {
   return db('events')
     .insert(newEvent, 'id')
-    .then(ids => {
-      const [id] = ids;
-      return findEventsID(id)
-        .select('*')
-    })
+    .returning('*')
+}
+
+function changeEvent(changes, id) {
+  return db('events')
+    .where('id', '=', id)
+    .update(changes)
+    .returning('*')
+}
+
+function removeEvent(id) {
+  return db('events')
+    .where('id', '=', id)
+    .del()
 }
