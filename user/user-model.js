@@ -8,7 +8,8 @@ module.exports = {
   findUserId,
   create,
   findUser,
-  find
+  find,
+  getMe
 }
 
 function findUserId(id) {
@@ -18,22 +19,28 @@ function findUserId(id) {
 }
 
 function create(user) {
-  
   return db('users')
   .insert(user, 'id')
   .then(ids => {
     const [id] = ids;
     return findUserId(id)
-      .select('id', 'username', 'role_id')
+      .select('id', 'username', 'password', 'role_id')
   })
 }
 
 function findUser(filter) {
   return db('users')
     .where(filter)
+    .select('id', 'username', 'password', 'role_id')
 }
 
 function find() {
   return db('users')
+    .select('id', 'username', 'role_id')
+}
+
+function getMe(user) {
+  return db('users')
+    .where({username: user})
     .select('id', 'username', 'role_id')
 }

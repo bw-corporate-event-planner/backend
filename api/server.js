@@ -15,6 +15,7 @@ const ListsRoutes = require('../lists/lists-router.js')
 
 const server = express();
 
+
 const sessionOptions = {
   name: 'corporate-event',
   secret: process.env.COOKIE_SECRET || 'keep it secret, keep it safe!', /// for encryption
@@ -32,19 +33,23 @@ const sessionOptions = {
   })
 }
 
-const corsOptions = {
-  origin: '*'
-}
+// const corsOptions ={
+//   credentials: true,
+// }
+
+// server.use(cors(corsOptions))
 
 server.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header("Access-Control-Allow-Origin", req.headers.origin); //req.headers.origin 
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Set-Cookie");
+  res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");
+  // res.setHeader('Access-Control-Allow-Headers', 'Set-Cookie')
+  res.header('Access-Control-Allow-Credentials', true);
   next();
 });
 
 server.use(helmet())
 server.use(express.json())
-server.use(cors())
 server.use(session(sessionOptions))
 
 server.use('/api', UserRoutes)

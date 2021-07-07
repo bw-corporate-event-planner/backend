@@ -13,36 +13,29 @@ router.post('/register', (request, response) => {
   newUser.password = hash
   console.log(newUser)
 
-  // if (newUser.role_id) {
-  //   Roles.findRole(1)
-  //     .then(role => {
-  //       newUser.role_id = role
-  //       console.log('newUser in Roles.findrole', newUser)
-  //       response.status(200).json(role)
-        Users.create(newUser)
-          .then(created => {
-            response.status(201).json(created)
-          })
-          .catch(error => {
-            console.log(error)
-            response.status(500).json(error)
-          })
-      // })
-      // .catch(error =>{
-      //   console.log(error)
-      //   response.status(500).json(error)
-      // })
-  // } else {
-  //   response.status(404).json({ message: 'This role does not exist' })
-  // }
-
+  Users.create(newUser)
+    .then(created => {
+      request.session.userid = newUser.id
+      request.session.username = newUser.username // adding username to the session cookie
+      request.session.role = newUser.role_id
+      request.session.loggedIn = true // Set info as logged in to true
+      console.log(request.session)
+      console.log(request.session.username)
+      response.status(201).json(created)
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json(error)
+    })
 })
-
 
 router.post('/login', (request, response) => {
   let { username, password } = request.body
   console.log(request.body)
   console.log(username)
+
+  // const hash = bcrypt.hashSync(password)
+  // password = hash
 
   if (username && password) {
     Users.findUser({ username })
@@ -50,8 +43,12 @@ router.post('/login', (request, response) => {
     .then(user => {
       console.log('.then user log', user)
       if (user && bcrypt.compareSync(password, user.password)) {
+        request.session.userID = user.id
         request.session.username = user.username // adding username to the session cookie
+        request.session.role = user.role_id
         request.session.loggedIn = true // Set info as logged in to true
+        console.log(request.session)
+        console.log(request.session.username)
         response.status(200).json(user)
       } else {
         response.status(401).json({ message: 'Invalid Credentials' })
@@ -66,6 +63,21 @@ router.post('/login', (request, response) => {
   }
 })
 
+router.get('/refresh', restricted, (request, response) => {
+  const user = request.session.username
+  console.log(user)
+  console.log('this is request.session in refresh', request.session)
+
+  Users.getMe(user)
+    .then(user => {
+      response.status(200).json(user)
+    })
+    .catch(error => {
+      console.log(error)
+      response.status(500).json({ message: `There is no user currently logged in` })
+    })
+})
+
 router.get('/logout', restricted, (request, response) => {
   request.session.destroy(() => {
     response.status(200).json({ message: 'You have been logged out' })
@@ -74,6 +86,9 @@ router.get('/logout', restricted, (request, response) => {
 
 //// Get list of users
 router.get('/users', (request, response) => {
+  const user = request.session.username
+  console.log(user)
+
   Users.find()
     .then(users => {
       response.json(users)
